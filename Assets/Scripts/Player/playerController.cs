@@ -1,13 +1,12 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class playerController : MonoBehaviour {
-
 	public static playerController instancia = null;
 
-	public float vel = 20f;
-	public float maxVel = 5f;
+	public float speed = 20f;
+	public float maxSpeed = 5f;
 	public bool enSuelo;
 	public float poderSalto = 120f;
     public Vector3 posIni;
@@ -21,7 +20,7 @@ public class playerController : MonoBehaviour {
 	public VidaController vida;
 
     //Acciones-------//
-	private bool saltar;
+	private bool shouldJump;
 	private bool dobleSalto;
 	private bool movimiento = true;
 	private bool cargando;
@@ -32,8 +31,7 @@ public class playerController : MonoBehaviour {
 	public GameObject initialMap;
 	public GameObject initialEnemyPreb;
     
-	void Start () {
-
+	void Start() {
 		weaponCol = transform.GetChild(1).GetComponent<CapsuleCollider2D>();
 		weaponCol.enabled = false;
 
@@ -45,7 +43,6 @@ public class playerController : MonoBehaviour {
 		animator = GetComponent<Animator>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		Camera.main.GetComponent<CamaraFollow>().SetBound(initialMap);
-        
 	}
 
 	private void Awake()
@@ -62,7 +59,6 @@ public class playerController : MonoBehaviour {
 		animator.SetBool("EnSuelo", enSuelo);
         
 		Salto();
-
 		Ataque();
 	}
 
@@ -77,42 +73,42 @@ public class playerController : MonoBehaviour {
 		float h = Input.GetAxis("Horizontal");
 		if (!movimiento) h = 0;
 
-		float velLimite = Mathf.Clamp(rg.velocity.x, -maxVel, maxVel);
-		rg.AddForce(Vector2.right * h * vel);
+		float velLimite = Mathf.Clamp(rg.velocity.x, -maxSpeed, maxSpeed);
+		rg.AddForce(Vector2.right * h * speed);
 
 		rg.velocity = new Vector2(velLimite, rg.velocity.y);
 		if (h > 0.1f)
 			transform.localScale = new Vector3(1f, 1f, 1f);
 		if (h < -0.1f)
 			transform.localScale = new Vector3(-1f, 1f, 1f);
-		if (saltar && dobleSalto)
+		
+        if (shouldJump && dobleSalto)
 		{// primer salto
 			rg.velocity = new Vector2(rg.velocity.x, 0);
 			rg.AddForce(Vector2.up * poderSalto, ForceMode2D.Impulse);
-			saltar = false;
+			shouldJump = false;
 		}
-		else if (saltar)
+		else if (shouldJump)
 		{
 			rg.velocity = new Vector2(rg.velocity.x, 0);
-			rg.AddForce(Vector2.up * poderSalto * .75f, ForceMode2D.Impulse);
-			saltar = false;
+    		rg.AddForce(Vector2.up * poderSalto * .75f, ForceMode2D.Impulse);
+            shouldJump = false;
 		}
 	}
 
 	private void SeCayo()
 	{
-		Debug.Log("cae");
-			transform.position = posIni;
-			vida.RestarVida();     
+		transform.position = posIni;
+		vida.RestarVida();     
 	}
 
 	public void EnemyJump(){
-		saltar = true;
+        shouldJump = true;
 	}
 
 	public void EnemyKnock(float posX)
     {
-        saltar = true;
+        shouldJump = true;
 		float side = Mathf.Sign(posX - transform.position.x);
 		rg.AddForce(Vector2.left * side * poderSalto, ForceMode2D.Impulse);
 
@@ -137,12 +133,12 @@ public class playerController : MonoBehaviour {
         {
             if (enSuelo)
             {
-                saltar = true;
+                shouldJump = true;
                 dobleSalto = true;
             }
             else if (dobleSalto)
             {
-                saltar = true;
+                shouldJump = true;
                 dobleSalto = false;
             }
         }
