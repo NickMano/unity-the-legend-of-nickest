@@ -20,8 +20,8 @@ public class playerController : MonoBehaviour {
 	public VidaController vida;
 
     //Acciones-------//
-	private bool shouldJump;
-	private bool dobleSalto;
+	private bool jumpRequested;
+	private bool doubleJumpEnable;
 	private bool movimiento = true;
 	private bool cargando;
 
@@ -82,17 +82,17 @@ public class playerController : MonoBehaviour {
 		if (h < -0.1f)
 			transform.localScale = new Vector3(-1f, 1f, 1f);
 		
-        if (shouldJump && dobleSalto)
+        if (jumpRequested && doubleJumpEnable)
 		{// primer salto
 			rg.velocity = new Vector2(rg.velocity.x, 0);
 			rg.AddForce(Vector2.up * poderSalto, ForceMode2D.Impulse);
-			shouldJump = false;
+			jumpRequested = false;
 		}
-		else if (shouldJump)
+		else if (jumpRequested)
 		{
 			rg.velocity = new Vector2(rg.velocity.x, 0);
     		rg.AddForce(Vector2.up * poderSalto * .75f, ForceMode2D.Impulse);
-            shouldJump = false;
+            jumpRequested = false;
 		}
 	}
 
@@ -103,12 +103,12 @@ public class playerController : MonoBehaviour {
 	}
 
 	public void EnemyJump(){
-        shouldJump = true;
+        jumpRequested = true;
 	}
 
 	public void EnemyKnock(float posX)
     {
-        shouldJump = true;
+        jumpRequested = true;
 		float side = Mathf.Sign(posX - transform.position.x);
 		rg.AddForce(Vector2.left * side * poderSalto, ForceMode2D.Impulse);
 
@@ -133,18 +133,18 @@ public class playerController : MonoBehaviour {
         {
             if (enSuelo)
             {
-                shouldJump = true;
-                dobleSalto = true;
+                jumpRequested = true;
+                doubleJumpEnable = true;
             }
-            else if (dobleSalto)
+            else if (doubleJumpEnable)
             {
-                shouldJump = true;
-                dobleSalto = false;
+                jumpRequested = true;
+                doubleJumpEnable = false;
             }
         }
 	}
 
-	void Ataque(){
+	void Ataque() {
 		AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
         atacando = stateInfo.IsName("JugadorEspada");
 
