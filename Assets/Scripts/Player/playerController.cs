@@ -5,25 +5,23 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class PlayerController : MonoBehaviour
 {
-	private static readonly int AtacandoHash = Animator.StringToHash("Atacando");
 	private static readonly int EnSueloHash = Animator.StringToHash("EnSuelo");
 	private static readonly int VelHash = Animator.StringToHash("Vel");
 	public static PlayerController instancia = null;
 
 	[SerializeField] private GameObject camara;
 	[SerializeField] private InputHandler inputHandler;
+	[SerializeField] private PlayerCombat combat;
 
 	private Rigidbody2D rg;
 	private SpriteRenderer spriteRenderer;
 	private Animator animator;
-	[SerializeField] private CapsuleCollider2D weaponCol;
 
 	//Acciones-------//
 	private bool jumpRequested;
 	private bool doubleJumpEnable;
 	private bool movimiento = true;
 
-	private bool isAttacking;
 	//---------------//
 
 	public float speed = 20f;
@@ -55,20 +53,18 @@ public class PlayerController : MonoBehaviour
 	void OnEnable()
 	{
 		inputHandler.JumpPressed += Jump;
-		inputHandler.AttackPressed += Attack;
+		inputHandler.AttackPressed += HandleAttack;
 	}
 
 	void OnDisable()
 	{
 		inputHandler.JumpPressed -= Jump;
-		inputHandler.AttackPressed -= Attack;
+		inputHandler.AttackPressed -= HandleAttack;
 
 	}
 
 	void Start()
 	{
-		weaponCol.enabled = false;
-
 		if (initialEnemyPreb) Instantiate(initialEnemyPreb);
 		// Go to checkpoint if fall 
 		posIni = transform.position;
@@ -79,7 +75,6 @@ public class PlayerController : MonoBehaviour
 	{
 		animator.SetFloat(VelHash, Mathf.Abs(rg.linearVelocity.x));
 		animator.SetBool(EnSueloHash, enSuelo);
-		UpdateAttackCollider();
 	}
 
 	private void FixedUpdate()
@@ -165,24 +160,8 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	void Attack()
+	private void HandleAttack()
 	{
-		AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
-		//Ataque
-		if (!stateInfo.IsName("JugadorEspada"))
-			animator.SetTrigger(AtacandoHash);
-	}
-
-	private void UpdateAttackCollider()
-	{
-		AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-		isAttacking = stateInfo.IsName("JugadorEspada");
-
-		float playbackTime = stateInfo.normalizedTime;
-		weaponCol.enabled =
-			isAttacking &&
-			playbackTime > 0.12f &&
-			playbackTime < 0.4f;
+		combat.Attack();
 	}
 }
