@@ -2,27 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class checkPiso : MonoBehaviour
+public class GroundDetector : MonoBehaviour
 {
 
-	private playerController player;
+	private PlayerController player;
 	private Rigidbody2D rgbd;
 
 	// Use this for initialization
 	void Start()
 	{
-		player = GetComponentInParent<playerController>();
+		player = GetComponentInParent<PlayerController>();
 		rgbd = GetComponentInParent<Rigidbody2D>();
 	}
 
 	private void OnCollisionEnter2D(Collision2D col)
 	{
 		if (col.gameObject.tag == "plataforma")
-        {
+		{
 			rgbd.linearVelocity = new Vector3(0f, 0f, 0f);
-            player.transform.parent = col.transform;
-            player.enSuelo = true;
-        }
+			player.transform.parent = col.transform;
+			player.enSuelo = true;
+		}
 	}
 
 	void OnCollisionStay2D(Collision2D col)
@@ -33,9 +33,9 @@ public class checkPiso : MonoBehaviour
 			player.enSuelo = true;
 		}
 		if (col.gameObject.tag == "suelo")
-        {
-            player.enSuelo = true;
-        }
+		{
+			player.enSuelo = true;
+		}
 	}
 
 	void OnCollisionExit2D(Collision2D col)
@@ -47,8 +47,8 @@ public class checkPiso : MonoBehaviour
 			DontDestroyOnLoad(player);
 		}
 		if (col.gameObject.tag == "suelo")
-        {
-            player.enSuelo = false;
-        }
+		{
+			player.enSuelo = false;
+		}
 	}
 }

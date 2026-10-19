@@ -1,20 +1,19 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class ExitControler : MonoBehaviour {
+public class ExitControler : MonoBehaviour
+{
 
     [Tooltip("Warp objetivo")]
-	public GameObject target;
+    public GameObject target;
     [Tooltip("Mapa objetivo")]
-	public GameObject targetMap;
-	[Tooltip("Donde estan los enemigos")]
-	public GameObject EnemigosPreb;
+    public GameObject targetMap;
+    [Tooltip("Donde estan los enemigos")]
+    public GameObject EnemigosPreb;
 
-	GameObject area;
+    GameObject area;
 
- // Para controlar si empieza o no la transición
+    // Para controlar si empieza o no la transición
     bool start = false;
     // Para controlar si la transición es de entrada o salida
     bool isFadeIn = false;
@@ -23,22 +22,22 @@ public class ExitControler : MonoBehaviour {
     // Transición de 1 segundo
     float fadeTime = 1f;
 
-	private void Awake()
-	{
-		area = GameObject.FindWithTag("Area");
-	}
-
-
-	IEnumerator OnTriggerEnter2D(Collider2D col)
+    private void Awake()
     {
-		if(col.CompareTag("Player")){
+        area = GameObject.FindWithTag("Area");
+    }
 
-			col.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-			col.GetComponent<Animator>().enabled = false;
-            col.GetComponent<playerController>().enabled = false;
 
-			FadeIn();
-			StartCoroutine(area.GetComponent<AreaController>().FadeOut(targetMap.name));
+    IEnumerator OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("Player"))
+        {
+            col.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+            col.GetComponent<Animator>().enabled = false;
+            col.GetComponent<PlayerController>().enabled = false;
+
+            FadeIn();
+            StartCoroutine(area.GetComponent<AreaController>().FadeOut(targetMap.name));
             yield return new WaitForSeconds(fadeTime);
 
             col.transform.position = target.transform.GetChild(0).transform.position;// posicion del hijo del warp
@@ -46,28 +45,28 @@ public class ExitControler : MonoBehaviour {
             Camera.main.GetComponent<CamaraFollow>().SetBound(targetMap);
 
             //destruyo los enemigos del mapa viejo
-         
-			GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemigo");
-			if(objects.Length != 0)
-                foreach(GameObject obj in objects)
-			        Destroy(obj);
-         
-			//Genero los enemigos del nuevo mapa
-            if(EnemigosPreb) Instantiate(EnemigosPreb);          
 
-           
-                
+            GameObject[] objects = GameObject.FindGameObjectsWithTag("Enemigo");
+            if (objects.Length != 0)
+                foreach (GameObject obj in objects)
+                    Destroy(obj);
+
+            //Genero los enemigos del nuevo mapa
+            if (EnemigosPreb) Instantiate(EnemigosPreb);
+
+
+
             FadeOut();
 
             col.GetComponent<Animator>().enabled = true;
-            col.GetComponent<playerController>().enabled = true;
+            col.GetComponent<PlayerController>().enabled = true;
 
         }
-        
+
 
     }
 
-	// Dibujaremos un cuadrado con opacidad encima de la pantalla simulando una transición
+    // Dibujaremos un cuadrado con opacidad encima de la pantalla simulando una transición
     void OnGUI()
     {
 
@@ -115,5 +114,4 @@ public class ExitControler : MonoBehaviour {
     {
         isFadeIn = false;
     }
-
 }

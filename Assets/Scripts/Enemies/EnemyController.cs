@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[RequireComponent(typeof(Rigidbody2D))]
 
-public class EnemyController : MonoBehaviour {
+[RequireComponent(typeof(SpriteRenderer))]
+public class EnemyController : MonoBehaviour
+{
 
 	public float vel = 1.5f;
-    public float maxVel = 1.5f;
-	public playerController player;
+	public float maxVel = 1.5f;
+	public PlayerController player;
 
 	[Tooltip("Vida Max")]
 	public int maxHp;
@@ -14,29 +17,34 @@ public class EnemyController : MonoBehaviour {
 	public bool mostrarVida;
 
 	private Vector3 start;
-    private Vector3 final;
+	private Vector3 final;
 	public Transform objetivo;
 
 	private SpriteRenderer spr;
 	private Rigidbody2D rg;
 
-	// Use this for initialization
-	void Start () {
+	void Awake()
+	{
 		spr = GetComponent<SpriteRenderer>();
 		rg = GetComponent<Rigidbody2D>();
-        if (objetivo){
-            objetivo.parent = null;
-            start = transform.position;
-            final = objetivo.position;
-        }
-		player = GameObject.Find("Player").GetComponent<playerController>();
+	}
+
+	void Start()
+	{
+		if (objetivo)
+		{
+			objetivo.parent = null;
+			start = transform.position;
+			final = objetivo.position;
+		}
+		player = GameObject.Find("Player").GetComponent<PlayerController>();
 		hp = maxHp;
 	}
-    
+
 	private void FixedUpdate()
-    {
+	{
 		if (!objetivo)
-        {
+		{
 			float velLimite = Mathf.Clamp(rg.linearVelocity.x, -maxVel, maxVel);
 			rg.AddForce(Vector2.right * vel);
 
@@ -54,53 +62,57 @@ public class EnemyController : MonoBehaviour {
 			if (vel > -0.1f)
 				transform.localScale = new Vector3(-1f, 1f, 1f);
 		}
-		else{
+		else
+		{
 			float fixVel = vel * Time.deltaTime;
 			transform.position = Vector3.MoveTowards(transform.position, objetivo.position, fixVel);
-        
-			if (transform.position == objetivo.position){
-					if(objetivo.position == start) objetivo.position = final;
-				    else objetivo.position = start;
 
-				transform.localScale = new Vector3(-transform.localScale.x, 1f, 1f);            
+			if (transform.position == objetivo.position)
+			{
+				if (objetivo.position == start) objetivo.position = final;
+				else objetivo.position = start;
 
-            }
+				transform.localScale = new Vector3(-transform.localScale.x, 1f, 1f);
+
+			}
 		}
-    }
+	}
 	private void OnTriggerEnter2D(Collider2D col)
-    {
-		if(col.CompareTag("Player") || col.CompareTag("Weapon")){
+	{
+		if (col.CompareTag("Player") || col.CompareTag("Weapon"))
+		{
 			mostrarVida = true;
 
 			if (col.CompareTag("Player")) col.SendMessage("EnemyKnock", transform.position.x);
 			else Atacado();
-        }
+		}
 
-    }
+	}
 
-    public void Atacado()
-    {
-        if (--hp <= 0) Destroy(gameObject);
-        StartCoroutine("AnimAtacado");
-    }
+	public void Atacado()
+	{
+		if (--hp <= 0) Destroy(gameObject);
+		StartCoroutine("AnimAtacado");
+	}
 
-    IEnumerator AnimAtacado(){
-        spr.color = Color.red;
-        yield return new WaitForSeconds(.5f);
-        spr.color = Color.white;
+	IEnumerator AnimAtacado()
+	{
+		spr.color = Color.red;
+		yield return new WaitForSeconds(.5f);
+		spr.color = Color.white;
 	}
 
 	private void OnGUI()
 	{
 		Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
-        if(mostrarVida)
-		GUI.Box(
-			new Rect(
-				pos.x - 20,
-				Screen.height - pos.y,
-				40,
-				24
-			), hp + "/" + maxHp
-		);
+		if (mostrarVida)
+			GUI.Box(
+				new Rect(
+					pos.x - 20,
+					Screen.height - pos.y,
+					40,
+					24
+				), hp + "/" + maxHp
+			);
 	}
 }
