@@ -43,6 +43,14 @@ public class PlayerCombat : MonoBehaviour
         weaponCollider.enabled = false;
     }
 
+    public void SetAttackAllowed(bool allowed)
+    {
+        attackAllowed = allowed;
+
+        if (!allowed)
+            CancelAttack();
+    }
+
     private void UpdateAttackCollider(bool isAttacking)
     {
         float time = animator
@@ -56,8 +64,6 @@ public class PlayerCombat : MonoBehaviour
             time < hitEnd;
     }
 
-
-
     private bool CanAttack()
     {
         return attackAllowed &&
@@ -70,5 +76,10 @@ public class PlayerCombat : MonoBehaviour
         return animator
             .GetCurrentAnimatorStateInfo(0)
             .IsName("JugadorEspada");
+    }
+
+    private void OnDisable()
+    {
+        SetAttackAllowed(false);
     }
 }

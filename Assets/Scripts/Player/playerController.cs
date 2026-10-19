@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
 	{
 		inputHandler.JumpPressed += Jump;
 		inputHandler.AttackPressed += HandleAttack;
+		combat.SetAttackAllowed(true);
 	}
 
 	void OnDisable()
@@ -61,6 +62,8 @@ public class PlayerController : MonoBehaviour
 		inputHandler.JumpPressed -= Jump;
 		inputHandler.AttackPressed -= HandleAttack;
 
+		combat.SetAttackAllowed(false);
+		jumpRequested = false;
 	}
 
 	void Start()
