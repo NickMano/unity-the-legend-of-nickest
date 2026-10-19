@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 	private Rigidbody2D rg;
 	private SpriteRenderer spriteRenderer;
 	private Animator animator;
-	private CapsuleCollider2D weaponCol;
+	[SerializeField] private CapsuleCollider2D weaponCol;
 
 	//Acciones-------//
 	private bool jumpRequested;
@@ -39,7 +39,10 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!instancia) instancia = this;
 		else if (instancia != this)
+		{
 			Destroy(gameObject);
+			return;
+		}
 
 		DontDestroyOnLoad(gameObject);
 
@@ -47,20 +50,18 @@ public class PlayerController : MonoBehaviour
 		animator = GetComponent<Animator>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		Camera.main.GetComponent<CamaraFollow>().SetBound(initialMap);
-
-		weaponCol = transform.GetChild(1).GetComponent<CapsuleCollider2D>();
 	}
 
 	void OnEnable()
 	{
-		inputHandler.onJumpPressed += Jump;
-		inputHandler.onAttackPressed += Attack;
+		inputHandler.JumpPressed += Jump;
+		inputHandler.AttackPressed += Attack;
 	}
 
 	void OnDisable()
 	{
-		inputHandler.onJumpPressed -= Jump;
-		inputHandler.onAttackPressed -= Attack;
+		inputHandler.JumpPressed -= Jump;
+		inputHandler.AttackPressed -= Attack;
 
 	}
 

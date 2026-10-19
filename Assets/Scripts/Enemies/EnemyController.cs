@@ -1,31 +1,29 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class EnemyController : MonoBehaviour
 {
-
-	public float vel = 1.5f;
-	public float maxVel = 1.5f;
-	public PlayerController player;
+	private static WaitForSeconds _waitForSeconds_5 = new(.5f);
+	[SerializeField] private float vel = 1.5f;
+	[SerializeField] private float maxVel = 1.5f;
 
 	[Tooltip("Vida Max")]
-	public int maxHp;
-	public int hp;
+	[SerializeField] private int maxHp;
+	[SerializeField] private int hp;
 	public bool mostrarVida;
 
 	private Vector3 start;
 	private Vector3 final;
 	public Transform objetivo;
 
-	private SpriteRenderer spr;
+	private SpriteRenderer spriteRenderer;
 	private Rigidbody2D rg;
 
 	void Awake()
 	{
-		spr = GetComponent<SpriteRenderer>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
 		rg = GetComponent<Rigidbody2D>();
 	}
 
@@ -37,7 +35,6 @@ public class EnemyController : MonoBehaviour
 			start = transform.position;
 			final = objetivo.position;
 		}
-		player = GameObject.Find("Player").GetComponent<PlayerController>();
 		hp = maxHp;
 	}
 
@@ -92,14 +89,14 @@ public class EnemyController : MonoBehaviour
 	public void Atacado()
 	{
 		if (--hp <= 0) Destroy(gameObject);
-		StartCoroutine("AnimAtacado");
+		StartCoroutine(nameof(AnimAtacado));
 	}
 
 	IEnumerator AnimAtacado()
 	{
-		spr.color = Color.red;
-		yield return new WaitForSeconds(.5f);
-		spr.color = Color.white;
+		spriteRenderer.color = Color.red;
+		yield return _waitForSeconds_5;
+		spriteRenderer.color = Color.white;
 	}
 
 	private void OnGUI()
