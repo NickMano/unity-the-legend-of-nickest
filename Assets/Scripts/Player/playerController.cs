@@ -55,7 +55,7 @@ public class playerController : MonoBehaviour {
 	}
 
 	void Update () {
-		animator.SetFloat("Vel", Mathf.Abs(rg.velocity.x));
+		animator.SetFloat("Vel", Mathf.Abs(rg.linearVelocity.x));
 		animator.SetBool("EnSuelo", enSuelo);
         
 		Salto();
@@ -64,19 +64,19 @@ public class playerController : MonoBehaviour {
 
 	private void FixedUpdate()
 	{
-		Vector3 fixedVelocity = rg.velocity;
+		Vector3 fixedVelocity = rg.linearVelocity;
 		fixedVelocity.x *= 0.75f;
 
 		if (enSuelo)
-			rg.velocity = fixedVelocity;
+			rg.linearVelocity = fixedVelocity;
 
 		float h = Input.GetAxis("Horizontal");
 		if (!movimiento) h = 0;
 
-		float velLimite = Mathf.Clamp(rg.velocity.x, -maxSpeed, maxSpeed);
+		float velLimite = Mathf.Clamp(rg.linearVelocity.x, -maxSpeed, maxSpeed);
 		rg.AddForce(Vector2.right * h * speed);
 
-		rg.velocity = new Vector2(velLimite, rg.velocity.y);
+		rg.linearVelocity = new Vector2(velLimite, rg.linearVelocity.y);
 		if (h > 0.1f)
 			transform.localScale = new Vector3(1f, 1f, 1f);
 		if (h < -0.1f)
@@ -84,13 +84,13 @@ public class playerController : MonoBehaviour {
 		
         if (jumpRequested && doubleJumpEnable)
 		{// primer salto
-			rg.velocity = new Vector2(rg.velocity.x, 0);
+			rg.linearVelocity = new Vector2(rg.linearVelocity.x, 0);
 			rg.AddForce(Vector2.up * poderSalto, ForceMode2D.Impulse);
 			jumpRequested = false;
 		}
 		else if (jumpRequested)
 		{
-			rg.velocity = new Vector2(rg.velocity.x, 0);
+			rg.linearVelocity = new Vector2(rg.linearVelocity.x, 0);
     		rg.AddForce(Vector2.up * poderSalto * .75f, ForceMode2D.Impulse);
             jumpRequested = false;
 		}

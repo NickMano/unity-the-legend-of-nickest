@@ -19,7 +19,7 @@ public class checkPiso : MonoBehaviour
 	{
 		if (col.gameObject.tag == "plataforma")
         {
-			rgbd.velocity = new Vector3(0f, 0f, 0f);
+			rgbd.linearVelocity = new Vector3(0f, 0f, 0f);
             player.transform.parent = col.transform;
             player.enSuelo = true;
         }
