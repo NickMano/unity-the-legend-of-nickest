@@ -1,0 +1,63 @@
+# Unity generated folders (keep Assets, Packages and ProjectSettings tracked)
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Bb]uild/
+/[Bb]uilds/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# Unity crash reports and generated build data
+/sysinfo.txt
+/[Cc]rash[Rr]eports/
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Generated IDE projects and caches
+/.vs/
+/.vscode/
+/.idea/
+/.gradle/
+ExportedObj/
+*.csproj
+*.unityproj
+*.sln
+*.slnx
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Unity generated asset data
+/[Aa]ssets/AssetStoreTools*
+/[Aa]ssets/AddressableAssetsData/*/*.bin*
+/[Aa]ssets/StreamingAssets/aa/
+/[Aa]ssets/StreamingAssets/aa.meta
+
+# Operating system files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+Thumbs.db.meta
+Desktop.ini
+
+# Temporary editor files
+*~
+*.tmp
+*.bak
+*.swp
+*.swo
