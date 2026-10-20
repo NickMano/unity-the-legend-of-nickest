@@ -28,7 +28,7 @@ public class PlayerCombat : MonoBehaviour
         UpdateAttackCollider(isAttacking);
     }
 
-    public void Attack()
+    public void RequestAttack()
     {
         if (!CanAttack()) return;
 

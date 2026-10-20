@@ -135,6 +135,8 @@ GameObject:
   - component: {fileID: 39862218}
   - component: {fileID: 39862217}
   - component: {fileID: 39862216}
+  - component: {fileID: 39862224}
+  - component: {fileID: 39862225}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -193,11 +195,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camara: {fileID: 1995887511}
   inputHandler: {fileID: 1858668226}
-  weaponCol: {fileID: 812263754}
-  speed: 20
-  maxSpeed: 5
-  enSuelo: 0
-  poderSalto: 8
+  combat: {fileID: 39862224}
+  motor: {fileID: 39862225}
   posIni: {x: 0, y: 0, z: 0}
   vida: {fileID: 39862217}
   initialMap: {fileID: 1065234130}
@@ -365,6 +364,36 @@ Transform:
   - {fileID: 812263752}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &39862224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39862215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c07280e6576d04b9faf2a3b76b98c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
+  weaponCollider: {fileID: 812263754}
+  hitStart: 0.12
+  hitEnd: 0.4
+--- !u!114 &39862225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39862215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ffae7fa2f8c7f04f891e244caf423a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMotor
+  maxSpeed: 10
+  poderSalto: 10
+  speed: 50
 --- !u!1 &47472277
 GameObject:
   m_ObjectHideFlags: 0
@@ -1926,7 +1955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41578981523e44a3da5bef9a6315c865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valor: 1
+  value: 0
 --- !u!60 &501520139
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2782,7 +2811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41578981523e44a3da5bef9a6315c865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valor: 1
+  value: 0
 --- !u!60 &617300655
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -6491,7 +6520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41578981523e44a3da5bef9a6315c865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valor: 1
+  value: 0
 --- !u!1 &1394336263
 GameObject:
   m_ObjectHideFlags: 0
@@ -8918,7 +8947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41578981523e44a3da5bef9a6315c865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valor: 1
+  value: 0
 --- !u!60 &1789258893
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -10623,7 +10652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41578981523e44a3da5bef9a6315c865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  valor: 1
+  value: 0
 --- !u!60 &1937366053
 PolygonCollider2D:
   m_ObjectHideFlags: 0

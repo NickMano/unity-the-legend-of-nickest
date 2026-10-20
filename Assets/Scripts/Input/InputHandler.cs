@@ -21,4 +21,6 @@ public class InputHandler : MonoBehaviour
         }
 
     }
+
+    public float MoveAxis => Input.GetAxis("Horizontal");
 }

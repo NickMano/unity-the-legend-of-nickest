@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
 public class PlayerController : MonoBehaviour
@@ -9,25 +8,19 @@ public class PlayerController : MonoBehaviour
 	private static readonly int VelHash = Animator.StringToHash("Vel");
 	public static PlayerController instancia = null;
 
+	[SerializeField, Min(0f)]
+	private float enemyBounceImpulse = 10f;
+	[SerializeField]
+	private Vector2 knockbackImpulse = new(5f, 6f);
+
 	[SerializeField] private GameObject camara;
 	[SerializeField] private InputHandler inputHandler;
 	[SerializeField] private PlayerCombat combat;
+	[SerializeField] private PlayerMotor motor;
 
-	private Rigidbody2D rg;
 	private SpriteRenderer spriteRenderer;
 	private Animator animator;
 
-	//Acciones-------//
-	private bool jumpRequested;
-	private bool doubleJumpEnable;
-	private bool movimiento = true;
-
-	//---------------//
-
-	public float speed = 20f;
-	public float maxSpeed = 5f;
-	public bool enSuelo;
-	public float poderSalto = 120f;
 	public Vector3 posIni;
 	public VidaController vida;
 	public GameObject initialMap;
@@ -44,7 +37,6 @@ public class PlayerController : MonoBehaviour
 
 		DontDestroyOnLoad(gameObject);
 
-		rg = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		Camera.main.GetComponent<CamaraFollow>().SetBound(initialMap);
@@ -52,18 +44,22 @@ public class PlayerController : MonoBehaviour
 
 	void OnEnable()
 	{
-		inputHandler.JumpPressed += Jump;
+		inputHandler.JumpPressed += HandleJump;
 		inputHandler.AttackPressed += HandleAttack;
 		combat.SetAttackAllowed(true);
+		motor.SetMovementAllowed(true);
 	}
 
 	void OnDisable()
 	{
-		inputHandler.JumpPressed -= Jump;
+		inputHandler.JumpPressed -= HandleJump;
 		inputHandler.AttackPressed -= HandleAttack;
 
 		combat.SetAttackAllowed(false);
-		jumpRequested = false;
+		combat.CancelAttack();
+
+		motor.SetMovementAllowed(false);
+		motor.ResetMotion();
 	}
 
 	void Start()
@@ -76,95 +72,46 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
-		animator.SetFloat(VelHash, Mathf.Abs(rg.linearVelocity.x));
-		animator.SetBool(EnSueloHash, enSuelo);
+		animator.SetFloat(VelHash, Mathf.Abs(motor.velocity.x));
+		animator.SetBool(EnSueloHash, motor.isGrounded);
 	}
 
 	private void FixedUpdate()
 	{
-		Vector3 fixedVelocity = rg.linearVelocity;
-		fixedVelocity.x *= 0.75f;
-
-		if (enSuelo)
-			rg.linearVelocity = fixedVelocity;
-
-		float h = Input.GetAxis("Horizontal");
-		if (!movimiento) h = 0;
-
-		float velLimite = Mathf.Clamp(rg.linearVelocity.x, -maxSpeed, maxSpeed);
-		rg.AddForce(h * speed * Vector2.right);
-
-		rg.linearVelocity = new Vector2(velLimite, rg.linearVelocity.y);
-		if (h > 0.1f)
-			transform.localScale = new Vector3(1f, 1f, 1f);
-		if (h < -0.1f)
-			transform.localScale = new Vector3(-1f, 1f, 1f);
-
-		if (jumpRequested && doubleJumpEnable) // First jump
-		{
-			rg.linearVelocity = new Vector2(rg.linearVelocity.x, 0);
-			rg.AddForce(Vector2.up * poderSalto, ForceMode2D.Impulse);
-			jumpRequested = false;
-		}
-		else if (jumpRequested)
-		{
-			rg.linearVelocity = new Vector2(rg.linearVelocity.x, 0);
-			rg.AddForce(Vector2.up * poderSalto * .75f, ForceMode2D.Impulse);
-			jumpRequested = false;
-		}
+		motor.SetMoveInput(inputHandler.MoveAxis);
 	}
 
 	private void SeCayo()
 	{
+		motor.ResetMotion();
 		transform.position = posIni;
 		vida.RestarVida();
 	}
 
 	public void EnemyJump()
 	{
-		jumpRequested = true;
+		motor.RequestBounce(enemyBounceImpulse);
 	}
 
-	public void EnemyKnock(float posX)
+	public void EnemyKnock(float enemyX)
 	{
-		jumpRequested = true;
-		float side = Mathf.Sign(posX - transform.position.x);
-		rg.AddForce(Vector2.left * side * poderSalto, ForceMode2D.Impulse);
+		float direction = transform.position.x >= enemyX ? 1f : -1f;
 
-		movimiento = false;
+		Vector2 force = new(direction * knockbackImpulse.x, knockbackImpulse.y);
+		motor.RequestKnockback(force);
+
 		spriteRenderer.color = Color.red;
 		vida.RestarVida();
-		Invoke("ActivarMove", 0.5f);
-
+		Invoke(nameof(ActivarMove), 0.5f);
 	}
 
 	void ActivarMove()
 	{
-		movimiento = true;
+		motor.SetMovementAllowed(true); ;
 		spriteRenderer.color = Color.white;
 	}
 
-	public void SetPosIni(Vector3 pos)
-	{
-		posIni = pos;
-	}
-
-	private void Jump()
-	{
-		if (enSuelo)
-		{
-			jumpRequested = true;
-			doubleJumpEnable = true;
-		}
-		else if (doubleJumpEnable)
-		{
-			jumpRequested = true;
-			doubleJumpEnable = false;
-		}
-	}
-
-	private void HandleAttack()
-	{
-		combat.Attack();
-	}
+	public void SetPosIni(Vector3 pos) => posIni = pos;
+	private void HandleAttack() => combat.RequestAttack();
+	private void HandleJump() => motor.RequestJump();
 }

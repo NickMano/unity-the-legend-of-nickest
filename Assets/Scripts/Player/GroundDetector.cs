@@ -1,54 +1,54 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GroundDetector : MonoBehaviour
 {
 
 	private PlayerController player;
-	private Rigidbody2D rgbd;
+	private PlayerMotor motor;
 
 	// Use this for initialization
 	void Start()
 	{
 		player = GetComponentInParent<PlayerController>();
-		rgbd = GetComponentInParent<Rigidbody2D>();
+		motor = GetComponentInParent<PlayerMotor>();
 	}
 
 	private void OnCollisionEnter2D(Collision2D col)
 	{
-		if (col.gameObject.tag == "plataforma")
+		if (col.gameObject.CompareTag("plataforma"))
 		{
-			rgbd.linearVelocity = new Vector3(0f, 0f, 0f);
+			motor.ResetMotion();
 			player.transform.parent = col.transform;
-			player.enSuelo = true;
+			motor.SetIsGrounded(true);
 		}
 	}
 
 	void OnCollisionStay2D(Collision2D col)
 	{
-		if (col.gameObject.tag == "plataforma")
+		if (col.gameObject.CompareTag("plataforma"))
 		{
 			player.transform.parent = col.transform;
-			player.enSuelo = true;
+			motor.SetIsGrounded(true);
+
 		}
-		if (col.gameObject.tag == "suelo")
+		if (col.gameObject.CompareTag("suelo"))
 		{
-			player.enSuelo = true;
+			motor.SetIsGrounded(true);
 		}
 	}
 
 	void OnCollisionExit2D(Collision2D col)
 	{
-		if (col.gameObject.tag == "plataforma")
+		if (col.gameObject.CompareTag("plataforma"))
 		{
 			player.transform.parent = null;
-			player.enSuelo = false;
+			motor.SetIsGrounded(false);
+
 			DontDestroyOnLoad(player);
 		}
-		if (col.gameObject.tag == "suelo")
+		if (col.gameObject.CompareTag("suelo"))
 		{
-			player.enSuelo = false;
+			motor.SetIsGrounded(false);
 		}
 	}
 }
