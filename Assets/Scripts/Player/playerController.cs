@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
 	private Animator animator;
 
 	public Vector3 posIni;
-	public VidaController vida;
+	public HealthController healthController;
 	public GameObject initialMap;
 	public GameObject initialEnemyPreb;
 
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
 	{
 		motor.ResetMotion();
 		transform.position = posIni;
-		vida.RestarVida();
+		healthController.TakeDamage(1);
 	}
 
 	public void EnemyJump()
@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
 		motor.RequestKnockback(force);
 
 		spriteRenderer.color = Color.red;
-		vida.RestarVida();
+		healthController.TakeDamage(1);
 		Invoke(nameof(ActivarMove), 0.5f);
 	}
 
