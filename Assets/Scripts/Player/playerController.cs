@@ -86,6 +86,16 @@ public class PlayerController : MonoBehaviour
 		motor.SetMoveInput(inputHandler.MoveAxis);
 	}
 
+	public void SetTransitionLocked(bool isLocked)
+	{
+		motor.ResetMotion();
+		motor.SetMovementAllowed(!isLocked);
+		motor.enabled = !isLocked;
+		combat.SetAttackAllowed(!isLocked);
+	}
+
+	public void SpawnTo(Vector3 position) => transform.position = position;
+
 	private void SeCayo()
 	{
 		motor.ResetMotion();
