@@ -3,7 +3,12 @@ interface IDamageable
     void TakeDamage(DamageInfo info);
 }
 
-public class DamageInfo
+public readonly struct DamageInfo
 {
-    int amount;
+    public int Amount { get; }
+
+    public DamageInfo(int amount)
+    {
+        Amount = amount;
+    }
 }

@@ -8,8 +8,8 @@ public class Moneda : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D col)
 	{
 		if (!col.CompareTag("Player")) return;
-
-		col.SendMessage("AddMoney", value);
+		var player = col.GetComponent<PlayerController>();
+		player.AddMoney(value);
 		Destroy(gameObject);
 		Debug.Log("sume " + value);
 	}

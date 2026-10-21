@@ -1,41 +1,50 @@
 ﻿using System.Collections;
 using UnityEngine;
-[RequireComponent(typeof(Rigidbody2D))]
 
+[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(HealthController))]
 public class EnemyController : MonoBehaviour
 {
 	private static WaitForSeconds _waitForSeconds_5 = new(.5f);
 	[SerializeField] private float vel = 1.5f;
 	[SerializeField] private float maxVel = 1.5f;
 
-	[Tooltip("Vida Max")]
-	[SerializeField] private int maxHp;
-	[SerializeField] private int hp;
-	public bool mostrarVida;
-
 	private Vector3 start;
 	private Vector3 final;
-	public Transform objetivo;
-
 	private SpriteRenderer spriteRenderer;
 	private Rigidbody2D rg;
+	private HealthController healthController;
+
+	public bool showLife;
+	public Transform objetivo;
 
 	void Awake()
 	{
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		rg = GetComponent<Rigidbody2D>();
+		healthController = GetComponent<HealthController>();
+	}
+
+	void OnEnable()
+	{
+		healthController.HealthChanged += HandleHealthChanged;
+		healthController.Died += HandleDead;
+	}
+
+	void OnDisable()
+	{
+		healthController.HealthChanged -= HandleHealthChanged;
+		healthController.Died -= HandleDead;
 	}
 
 	void Start()
 	{
-		if (objetivo)
-		{
-			objetivo.parent = null;
-			start = transform.position;
-			final = objetivo.position;
-		}
-		hp = maxHp;
+		if (!objetivo) return;
+
+		objetivo.parent = null;
+		start = transform.position;
+		final = objetivo.position;
 	}
 
 	private void FixedUpdate()
@@ -61,55 +70,72 @@ public class EnemyController : MonoBehaviour
 		}
 		else
 		{
-			float fixVel = vel * Time.deltaTime;
-			transform.position = Vector3.MoveTowards(transform.position, objetivo.position, fixVel);
-
-			if (transform.position == objetivo.position)
-			{
-				if (objetivo.position == start) objetivo.position = final;
-				else objetivo.position = start;
-
-				transform.localScale = new Vector3(-transform.localScale.x, 1f, 1f);
-
-			}
+			Patrol();
 		}
 	}
+
 	private void OnTriggerEnter2D(Collider2D col)
 	{
 		if (col.CompareTag("Player") || col.CompareTag("Weapon"))
 		{
-			mostrarVida = true;
+			showLife = true;
 
-			if (col.CompareTag("Player")) col.SendMessage("EnemyKnock", transform.position.x);
-			else Atacado();
+			if (col.CompareTag("Player") && col.TryGetComponent<PlayerController>(out var player))
+				player.EnemyKnock(transform.position.x);
+			else
+				TakeDamage(1);
 		}
 
 	}
 
-	public void Atacado()
+	public void TakeDamage(int damage)
 	{
-		if (--hp <= 0) Destroy(gameObject);
-		StartCoroutine(nameof(AnimAtacado));
+		healthController.TakeDamage(damage);
 	}
 
-	IEnumerator AnimAtacado()
+	private IEnumerator AnimAtacado()
 	{
 		spriteRenderer.color = Color.red;
 		yield return _waitForSeconds_5;
 		spriteRenderer.color = Color.white;
 	}
 
+	private void Patrol()
+	{
+		float fixVel = vel * Time.deltaTime;
+		transform.position = Vector3.MoveTowards(transform.position, objetivo.position, fixVel);
+
+		if (transform.position != objetivo.position) return;
+		ChangeDirection();
+	}
+
+	private void ChangeDirection()
+	{
+		objetivo.position = objetivo.position == start ? final : start;
+		transform.localScale = new Vector3(-transform.localScale.x, 1f, 1f);
+	}
+
 	private void OnGUI()
 	{
 		Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
-		if (mostrarVida)
+		if (showLife)
 			GUI.Box(
 				new Rect(
 					pos.x - 20,
 					Screen.height - pos.y,
 					40,
 					24
-				), hp + "/" + maxHp
+				), healthController.currentHealth + "/" + healthController.GetMaxHealth()
 			);
+	}
+
+	private void HandleHealthChanged()
+	{
+		StartCoroutine(nameof(AnimAtacado));
+	}
+
+	private void HandleDead()
+	{
+		Destroy(gameObject);
 	}
 }

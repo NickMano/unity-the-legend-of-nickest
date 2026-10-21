@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySimple : EnemyController {
-
-	// Use this for initialization
+public class EnemySimple : EnemyController
+{
 	private void OnTriggerEnter2D(Collider2D col)
-    {
+	{
 		if (col.CompareTag("Player") || col.CompareTag("Weapon"))
-        { 
-			mostrarVida = true;
-			if (col.CompareTag("Player"))
+		{
+			showLife = true;
+			if (col.CompareTag("Player") && col.TryGetComponent<PlayerController>(out var player))
 			{
 				if ((col.transform.position.y - 0.3f) > transform.position.y)
 				{
-					col.SendMessage("EnemyJump");
-					Atacado();
+					player.EnemyJump();
+					TakeDamage(1);
 				}
-				else col.SendMessage("EnemyKnock", transform.position.x);
+				else
+					player.EnemyKnock(transform.position.x);
 			}
-			else Atacado();
-        }
-    }
+			else
+				TakeDamage(1);
+		}
+	}
 }

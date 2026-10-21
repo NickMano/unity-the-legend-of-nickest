@@ -3,7 +3,7 @@
 [RequireComponent(typeof(Animator))]
 public class CheckPointController : MonoBehaviour
 {
-	private static readonly int ActivarCheckHash = Animator.StringToHash("activarCheck");
+	private static readonly int ActiveCheckpointTrigger = Animator.StringToHash("activarCheck");
 	private Vector2 pos;
 	public Sprite check;
 	private Animator animator;
@@ -21,11 +21,11 @@ public class CheckPointController : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.gameObject.CompareTag("Player"))
+		if (col.CompareTag("Player") && col.TryGetComponent<PlayerController>(out var player))
 		{
-			col.SendMessage("SetPosIni", pos);
+			player.SetPosIni(pos);
 			activarCheck = true;
-			animator.SetBool(ActivarCheckHash, activarCheck);
+			animator.SetBool(ActiveCheckpointTrigger, activarCheck);
 		}
 	}
 }

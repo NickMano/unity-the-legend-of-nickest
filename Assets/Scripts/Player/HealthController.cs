@@ -8,6 +8,7 @@ public class HealthController : MonoBehaviour
     public int currentHealth { get; private set; }
 
     public event Action HealthChanged;
+    public event Action Died;
 
     void Awake()
     {
@@ -16,18 +17,13 @@ public class HealthController : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (amount <= 0) return;
-        if (currentHealth == 0) return;
+        if (amount <= 0 || currentHealth == 0) return;
 
-        if (currentHealth < amount)
-        {
-            currentHealth = 0;
-            HealthChanged?.Invoke();
-            return;
-        }
-
-        currentHealth -= amount;
+        currentHealth = Mathf.Max(0, currentHealth - amount);
         HealthChanged?.Invoke();
+
+        if (currentHealth == 0)
+            Died?.Invoke();
     }
 
     public int GetMaxHealth() => maxHealth;

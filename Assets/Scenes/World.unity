@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &36143738 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4980009836580972, guid: 68a8bf06d3d4240edabbf10f08526bf9, type: 3}
+  m_PrefabInstance: {fileID: 1931599068}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &39862217 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114515165908024866, guid: b0797b1be71774f178d36e5867ae758c, type: 3}
@@ -963,7 +968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30fad7024e6745188c62f837b2817fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPortal: {fileID: 625956251}
+  spawnPoint: {fileID: 36143738}
   targetMap: {fileID: 1700513329}
   EnemigosPreb: {fileID: 1883696743848658, guid: 22e5899998ec54f2596d681df0338e60, type: 3}
   transitionController: {fileID: 775448526}
@@ -1031,6 +1036,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f1ee7a2dda7234b9963968cc83f743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &337243378 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4682247793617378, guid: 0f2e49223013c429ba783432260a6c65, type: 3}
+  m_PrefabInstance: {fileID: 1534388190}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &337812307
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,11 +1181,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d2606cc7431d4b6382b6216a9fe321f, type: 3}
---- !u!1 &377059389 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1631432654041692, guid: 0f2e49223013c429ba783432260a6c65, type: 3}
-  m_PrefabInstance: {fileID: 1534388190}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &382409840
 GameObject:
   m_ObjectHideFlags: 0
@@ -2858,11 +2863,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f1ee7a2dda7234b9963968cc83f743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &625956251 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1032002194953158, guid: 68a8bf06d3d4240edabbf10f08526bf9, type: 3}
-  m_PrefabInstance: {fileID: 1931599068}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &626334571
 GameObject:
   m_ObjectHideFlags: 0
@@ -3902,6 +3902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AreaTransitionController
   screenFader: {fileID: 149979866}
+  camera: {fileID: 1995887512}
 --- !u!1 &776890866
 GameObject:
   m_ObjectHideFlags: 0
@@ -5601,6 +5602,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f1ee7a2dda7234b9963968cc83f743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1275131558 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4017737521296548, guid: 0f2e49223013c429ba783432260a6c65, type: 3}
+  m_PrefabInstance: {fileID: 1534388190}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1318384381 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4205595859907268, guid: 3d2606cc7431d4b6382b6216a9fe321f, type: 3}
@@ -6909,6 +6915,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1595856284}
     - target: {fileID: 114073245355341222, guid: 0f2e49223013c429ba783432260a6c65, type: 3}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 929524407}
+    - target: {fileID: 114073245355341222, guid: 0f2e49223013c429ba783432260a6c65, type: 3}
       propertyPath: EnemigosPreb
       value: 
       objectReference: {fileID: 1569110012718820, guid: db087a9016a14441c8dcbd1e6ffb9488, type: 3}
@@ -6924,6 +6934,10 @@ PrefabInstance:
       propertyPath: area
       value: 
       objectReference: {fileID: 802988245}
+    - target: {fileID: 114329577318857180, guid: 0f2e49223013c429ba783432260a6c65, type: 3}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 1275131558}
     - target: {fileID: 114329577318857180, guid: 0f2e49223013c429ba783432260a6c65, type: 3}
       propertyPath: transitionController
       value: 
@@ -8267,7 +8281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30fad7024e6745188c62f837b2817fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPortal: {fileID: 377059389}
+  spawnPoint: {fileID: 337243378}
   targetMap: {fileID: 1065234130}
   EnemigosPreb: {fileID: 0}
   transitionController: {fileID: 775448526}
@@ -10406,6 +10420,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1595856284}
     - target: {fileID: 114620316537701536, guid: 68a8bf06d3d4240edabbf10f08526bf9, type: 3}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 878845670}
+    - target: {fileID: 114620316537701536, guid: 68a8bf06d3d4240edabbf10f08526bf9, type: 3}
       propertyPath: EnemigosPreb
       value: 
       objectReference: {fileID: 1569110012718820, guid: db087a9016a14441c8dcbd1e6ffb9488, type: 3}
@@ -10664,6 +10682,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1168044140931102, guid: c9ff8af29418f4c30810736a78f85f0d, type: 3}
   m_PrefabInstance: {fileID: 1363063103}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1995887512 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114034327685102908, guid: c9ff8af29418f4c30810736a78f85f0d, type: 3}
+  m_PrefabInstance: {fileID: 1363063103}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995887511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e5d1cb0f62774a25a16cc29d092590d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2002201372
 GameObject:
   m_ObjectHideFlags: 0
