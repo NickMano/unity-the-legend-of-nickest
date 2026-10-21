@@ -5950,7 +5950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30fad7024e6745188c62f837b2817fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  targetPortal: {fileID: 0}
   targetMap: {fileID: 0}
 --- !u!114 &114313327557191412
 MonoBehaviour:
@@ -6621,7 +6621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30fad7024e6745188c62f837b2817fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  targetPortal: {fileID: 0}
   targetMap: {fileID: 0}
 --- !u!114 &114734323184039938
 MonoBehaviour:

@@ -3513,7 +3513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30fad7024e6745188c62f837b2817fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  targetPortal: {fileID: 0}
   targetMap: {fileID: 0}
 --- !u!114 &114132930061523456
 MonoBehaviour:
@@ -3582,7 +3582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30fad7024e6745188c62f837b2817fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1235328783750526}
+  targetPortal: {fileID: 1235328783750526}
   targetMap: {fileID: 1901449369748988}
 --- !u!114 &114345704145038752
 MonoBehaviour:

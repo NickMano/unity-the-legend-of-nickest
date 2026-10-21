@@ -1,7 +1,9 @@
 using UnityEngine;
-
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(PlayerMotor))]
+[RequireComponent(typeof(PlayerCombat))]
+[RequireComponent(typeof(HealthController))]
 public class PlayerController : MonoBehaviour
 {
 	private static readonly int EnSueloHash = Animator.StringToHash("EnSuelo");
@@ -15,14 +17,14 @@ public class PlayerController : MonoBehaviour
 
 	[SerializeField] private GameObject camara;
 	[SerializeField] private InputHandler inputHandler;
-	[SerializeField] private PlayerCombat combat;
-	[SerializeField] private PlayerMotor motor;
 
+	private PlayerCombat combat;
+	private PlayerMotor motor;
+	private HealthController healthController;
 	private SpriteRenderer spriteRenderer;
 	private Animator animator;
 
 	public Vector3 posIni;
-	public HealthController healthController;
 	public GameObject initialMap;
 	public GameObject initialEnemyPreb;
 
@@ -37,6 +39,9 @@ public class PlayerController : MonoBehaviour
 
 		DontDestroyOnLoad(gameObject);
 
+		combat = GetComponent<PlayerCombat>();
+		motor = GetComponent<PlayerMotor>();
+		healthController = GetComponent<HealthController>();
 		animator = GetComponent<Animator>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		Camera.main.GetComponent<CamaraFollow>().SetBound(initialMap);
