@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 114395050093731442}
   - component: {fileID: 3816564079728991198}
   m_Layer: 9
-  m_Name: Enemy
+  m_Name: SideSpikedEnemy
   m_TagString: Enemigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -332,9 +332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vel: 1.5
   maxVel: 1.5
-  maxHp: 2
-  hp: 0
-  mostrarVida: 0
+  showLife: 0
   objetivo: {fileID: 4991497763775008}
 --- !u!114 &114395050093731442
 MonoBehaviour:

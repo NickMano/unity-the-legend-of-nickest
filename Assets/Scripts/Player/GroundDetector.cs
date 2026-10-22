@@ -2,7 +2,6 @@
 
 public class GroundDetector : MonoBehaviour
 {
-
 	private PlayerController player;
 	private PlayerMotor motor;
 
@@ -13,40 +12,40 @@ public class GroundDetector : MonoBehaviour
 		motor = GetComponentInParent<PlayerMotor>();
 	}
 
-	private void OnCollisionEnter2D(Collision2D col)
+	private void OnCollisionEnter2D(Collision2D other)
 	{
-		if (col.gameObject.CompareTag("plataforma"))
+		if (other.gameObject.CompareTag("plataforma"))
 		{
 			motor.ResetMotion();
-			player.transform.parent = col.transform;
+			player.transform.parent = other.transform;
 			motor.SetIsGrounded(true);
 		}
 	}
 
-	void OnCollisionStay2D(Collision2D col)
+	void OnCollisionStay2D(Collision2D other)
 	{
-		if (col.gameObject.CompareTag("plataforma"))
+		if (other.gameObject.CompareTag("plataforma"))
 		{
-			player.transform.parent = col.transform;
+			player.transform.parent = other.transform;
 			motor.SetIsGrounded(true);
 
 		}
-		if (col.gameObject.CompareTag("suelo"))
+		if (other.gameObject.CompareTag("suelo"))
 		{
 			motor.SetIsGrounded(true);
 		}
 	}
 
-	void OnCollisionExit2D(Collision2D col)
+	void OnCollisionExit2D(Collision2D other)
 	{
-		if (col.gameObject.CompareTag("plataforma"))
+		if (other.gameObject.CompareTag("plataforma"))
 		{
 			player.transform.parent = null;
 			motor.SetIsGrounded(false);
 
 			DontDestroyOnLoad(player);
 		}
-		if (col.gameObject.CompareTag("suelo"))
+		if (other.gameObject.CompareTag("suelo"))
 		{
 			motor.SetIsGrounded(false);
 		}

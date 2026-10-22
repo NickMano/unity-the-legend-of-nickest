@@ -6,7 +6,7 @@ public class HealthView : MonoBehaviour
     [SerializeField] private Sprite fullHeart;
     [SerializeField] private Sprite halfHeart;
     [SerializeField] private Sprite emptyHeart;
-    [SerializeField] private HealthController controller;
+    [SerializeField] private Health controller;
 
     [SerializeField] private Image[] vida;
 

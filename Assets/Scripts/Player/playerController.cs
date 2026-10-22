@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(PlayerMotor))]
 [RequireComponent(typeof(PlayerCombat))]
-[RequireComponent(typeof(HealthController))]
+[RequireComponent(typeof(Health))]
 public class PlayerController : MonoBehaviour
 {
 	private static readonly int EnSueloHash = Animator.StringToHash("EnSuelo");
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
 	private PlayerCombat combat;
 	private PlayerMotor motor;
-	private HealthController healthController;
+	private Health health;
 	private SpriteRenderer spriteRenderer;
 	private Animator animator;
 	private int currentMoney = 0;
@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
 	public Vector3 posIni;
 	public GameObject initialMap;
 	public GameObject initialEnemyPreb;
+
+	public int jumpDamage { get; private set; } = 1;
 
 	void Awake()
 	{
@@ -42,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
 		combat = GetComponent<PlayerCombat>();
 		motor = GetComponent<PlayerMotor>();
-		healthController = GetComponent<HealthController>();
+		health = GetComponent<Health>();
 		animator = GetComponent<Animator>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		Camera.main.GetComponent<CamaraFollow>().SetBound(initialMap);
@@ -100,7 +102,7 @@ public class PlayerController : MonoBehaviour
 	{
 		motor.ResetMotion();
 		transform.position = posIni;
-		healthController.TakeDamage(1);
+		health.TakeDamage(1);
 	}
 
 	public void EnemyJump()
@@ -116,7 +118,7 @@ public class PlayerController : MonoBehaviour
 		motor.RequestKnockback(force);
 
 		spriteRenderer.color = Color.red;
-		healthController.TakeDamage(1);
+		health.TakeDamage(1);
 		Invoke(nameof(ActivarMove), 0.5f);
 	}
 

@@ -2,14 +2,11 @@
 
 public class Attack : MonoBehaviour
 {
+	[SerializeField, Min(1)] private int damage = 1;
 
-	// Use this for initialization
-	private void OnTriggerEnter2D(Collider2D collision)
+	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (collision.CompareTag("Enemigo") && collision.TryGetComponent<EnemyController>(out var enemy))
-		{
-			Debug.Log("atacado");
-			enemy.TakeDamage(1);
-		}
+		var target = other.GetComponentInParent<IDamageable>();
+		target?.TakeDamage(new DamageInfo(damage));
 	}
 }

@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 50516336733407324}
   - component: {fileID: 95615346618336146}
   - component: {fileID: 114937158336381060}
-  - component: {fileID: 114061949710410310}
+  - component: {fileID: 1253157918935459525}
   - component: {fileID: 5554726960587538451}
   m_Layer: 9
   m_Name: EnemyHorn
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   from: {fileID: 4448940349974342}
   to: {fileID: 4883204101561132}
---- !u!114 &114061949710410310
+--- !u!114 &1253157918935459525
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -340,12 +340,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1093567327264432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02f2d8ae43b434ef38bf613233b04b36, type: 3}
+  m_Script: {fileID: 11500000, guid: 1146bcc4b73602448b481fe148f8955e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::TopSpikedEnemy
   vel: 1.5
   maxVel: 1.5
-  mostrarVida: 0
+  showLife: 0
   objetivo: {fileID: 4883204101561132}
 --- !u!114 &5554726960587538451
 MonoBehaviour:
@@ -689,7 +689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vel: 2
   maxVel: 2
-  mostrarVida: 0
+  showLife: 0
   objetivo: {fileID: 0}
 --- !u!114 &180278424493381921
 MonoBehaviour:
@@ -982,7 +982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vel: 1.5
   maxVel: 1.5
-  mostrarVida: 0
+  showLife: 0
   objetivo: {fileID: 0}
 --- !u!114 &114177251379822300
 MonoBehaviour:
@@ -1025,7 +1025,7 @@ GameObject:
   - component: {fileID: 50941243731922968}
   - component: {fileID: 95820409208045492}
   - component: {fileID: 114955234093621930}
-  - component: {fileID: 114495872357325276}
+  - component: {fileID: 6004331693860174031}
   - component: {fileID: 287951824677478738}
   m_Layer: 9
   m_Name: EnemyHorn (3)
@@ -1226,7 +1226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   from: {fileID: 4156059037224600}
   to: {fileID: 4378678136433262}
---- !u!114 &114495872357325276
+--- !u!114 &6004331693860174031
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1235,12 +1235,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1388408232072232}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02f2d8ae43b434ef38bf613233b04b36, type: 3}
+  m_Script: {fileID: 11500000, guid: 1146bcc4b73602448b481fe148f8955e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::TopSpikedEnemy
   vel: 1.5
   maxVel: 1.5
-  mostrarVida: 0
+  showLife: 0
   objetivo: {fileID: 4378678136433262}
 --- !u!114 &287951824677478738
 MonoBehaviour:
@@ -1586,7 +1586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vel: 1.5
   maxVel: 1.5
-  mostrarVida: 0
+  showLife: 0
   objetivo: {fileID: 4654186781099662}
 --- !u!114 &114604628044313432
 MonoBehaviour:
@@ -1753,7 +1753,7 @@ GameObject:
   - component: {fileID: 50243209938915754}
   - component: {fileID: 95175593564511430}
   - component: {fileID: 114146335080230674}
-  - component: {fileID: 114291832533770034}
+  - component: {fileID: 2724413937407746566}
   - component: {fileID: 1817590455108447715}
   m_Layer: 9
   m_Name: EnemyHorn (1)
@@ -1954,7 +1954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   from: {fileID: 4271044491336100}
   to: {fileID: 4833811597420442}
---- !u!114 &114291832533770034
+--- !u!114 &2724413937407746566
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1963,12 +1963,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1616642797008970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02f2d8ae43b434ef38bf613233b04b36, type: 3}
+  m_Script: {fileID: 11500000, guid: 1146bcc4b73602448b481fe148f8955e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::TopSpikedEnemy
   vel: 1.5
   maxVel: 1.5
-  mostrarVida: 0
+  showLife: 0
   objetivo: {fileID: 4833811597420442}
 --- !u!114 &1817590455108447715
 MonoBehaviour:
@@ -2230,7 +2230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vel: 1.5
   maxVel: 1.5
-  mostrarVida: 0
+  showLife: 0
   objetivo: {fileID: 4263661156605562}
 --- !u!114 &114216525828394182
 MonoBehaviour:
@@ -2557,7 +2557,7 @@ GameObject:
   - component: {fileID: 50838005108565684}
   - component: {fileID: 95011538543447722}
   - component: {fileID: 114387758969604664}
-  - component: {fileID: 114945330042441104}
+  - component: {fileID: 7973974971266163659}
   - component: {fileID: 6679275172889356402}
   m_Layer: 9
   m_Name: EnemyHorn (2)
@@ -2758,7 +2758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   from: {fileID: 4978434349580512}
   to: {fileID: 4388992368109152}
---- !u!114 &114945330042441104
+--- !u!114 &7973974971266163659
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2767,12 +2767,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1928431155963584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02f2d8ae43b434ef38bf613233b04b36, type: 3}
+  m_Script: {fileID: 11500000, guid: 1146bcc4b73602448b481fe148f8955e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::TopSpikedEnemy
   vel: 1.5
   maxVel: 1.5
-  mostrarVida: 0
+  showLife: 0
   objetivo: {fileID: 4388992368109152}
 --- !u!114 &6679275172889356402
 MonoBehaviour:

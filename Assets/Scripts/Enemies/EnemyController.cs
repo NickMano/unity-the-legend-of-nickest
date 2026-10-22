@@ -3,8 +3,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(HealthController))]
-public class EnemyController : MonoBehaviour
+[RequireComponent(typeof(Health))]
+public class EnemyController : MonoBehaviour, IDamageable
 {
 	private static WaitForSeconds _waitForSeconds_5 = new(.5f);
 	[SerializeField] private float vel = 1.5f;
@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
 	private Vector3 final;
 	private SpriteRenderer spriteRenderer;
 	private Rigidbody2D rg;
-	private HealthController healthController;
+	private Health health;
 
 	public bool showLife;
 	public Transform objetivo;
@@ -23,19 +23,19 @@ public class EnemyController : MonoBehaviour
 	{
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		rg = GetComponent<Rigidbody2D>();
-		healthController = GetComponent<HealthController>();
+		health = GetComponent<Health>();
 	}
 
 	void OnEnable()
 	{
-		healthController.HealthChanged += HandleHealthChanged;
-		healthController.Died += HandleDead;
+		health.HealthChanged += HandleHealthChanged;
+		health.Died += HandleDead;
 	}
 
 	void OnDisable()
 	{
-		healthController.HealthChanged -= HandleHealthChanged;
-		healthController.Died -= HandleDead;
+		health.HealthChanged -= HandleHealthChanged;
+		health.Died -= HandleDead;
 	}
 
 	void Start()
@@ -74,23 +74,10 @@ public class EnemyController : MonoBehaviour
 		}
 	}
 
-	private void OnTriggerEnter2D(Collider2D col)
+	public void TakeDamage(DamageInfo damage)
 	{
-		if (col.CompareTag("Player") || col.CompareTag("Weapon"))
-		{
-			showLife = true;
-
-			if (col.CompareTag("Player") && col.TryGetComponent<PlayerController>(out var player))
-				player.EnemyKnock(transform.position.x);
-			else
-				TakeDamage(1);
-		}
-
-	}
-
-	public void TakeDamage(int damage)
-	{
-		healthController.TakeDamage(damage);
+		Debug.Log("take damage from enemyconroller: ${damage}");
+		health.TakeDamage(damage.Amount);
 	}
 
 	private IEnumerator AnimAtacado()
@@ -125,12 +112,13 @@ public class EnemyController : MonoBehaviour
 					Screen.height - pos.y,
 					40,
 					24
-				), healthController.currentHealth + "/" + healthController.GetMaxHealth()
+				), health.currentHealth + "/" + health.GetMaxHealth()
 			);
 	}
 
 	private void HandleHealthChanged()
 	{
+		showLife = true;
 		StartCoroutine(nameof(AnimAtacado));
 	}
 
