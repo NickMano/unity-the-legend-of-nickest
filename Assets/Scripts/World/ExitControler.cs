@@ -13,15 +13,15 @@ public class ExitControler : MonoBehaviour
     [SerializeField]
     private GameObject EnemigosPreb;
 
-    [SerializeField] private AreaTransitionController transitionController;
+    [SerializeField] private AreaCoordinator coordinator;
 
-    [SerializeField] private AreaController area;
+    [SerializeField] private AreaNameView area;
 
     IEnumerator OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Player"))
         {
-            yield return transitionController.StartTransition(col, area, spawnPoint, targetMap, EnemigosPreb);
+            yield return coordinator.StartTransition(col, area, spawnPoint, targetMap, EnemigosPreb);
         }
     }
 }

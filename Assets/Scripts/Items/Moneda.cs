@@ -2,16 +2,20 @@
 
 public class Moneda : MonoBehaviour
 {
+	[SerializeField, Min(1)] private int value;
+	private bool isColleted = false;
 
-	[SerializeField] private int value;
-
-	private void OnTriggerEnter2D(Collider2D col)
+	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (!col.CompareTag("Player")) return;
-		var player = col.GetComponent<PlayerController>();
-		player.AddMoney(value);
-		Destroy(gameObject);
-		Debug.Log("sume " + value);
-	}
+		if (isColleted) return;
 
+		if (other.gameObject.TryGetComponent<Wallet>(out var wallet))
+		{
+			wallet.Add(value);
+			isColleted = true;
+
+			Destroy(gameObject);
+			Debug.Log("sume " + value);
+		}
+	}
 }

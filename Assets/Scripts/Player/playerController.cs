@@ -23,10 +23,9 @@ public class PlayerController : MonoBehaviour
 	private Health health;
 	private SpriteRenderer spriteRenderer;
 	private Animator animator;
-	private int currentMoney = 0;
 
 	public Vector3 posIni;
-	public GameObject initialMap;
+
 	public GameObject initialEnemyPreb;
 
 	public int jumpDamage { get; private set; } = 1;
@@ -47,7 +46,6 @@ public class PlayerController : MonoBehaviour
 		health = GetComponent<Health>();
 		animator = GetComponent<Animator>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
-		Camera.main.GetComponent<CamaraFollow>().SetBound(initialMap);
 	}
 
 	void OnEnable()
@@ -128,11 +126,6 @@ public class PlayerController : MonoBehaviour
 		spriteRenderer.color = Color.white;
 	}
 
-	public void AddMoney(int value)
-	{
-		if (value <= 0) return;
-		currentMoney += value;
-	}
 	public void SetPosIni(Vector3 pos) => posIni = pos;
 	private void HandleAttack() => combat.RequestAttack();
 	private void HandleJump() => motor.RequestJump();

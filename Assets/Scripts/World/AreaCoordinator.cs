@@ -1,14 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
-public class AreaTransitionController : MonoBehaviour
+public class AreaCoordinator : MonoBehaviour
 {
     private bool inTransition = false;
 
     [SerializeField] private ScreenFader screenFader;
     [SerializeField] private CamaraFollow camera;
 
-    public IEnumerator StartTransition(Collider2D player, AreaController area, Transform spawnPoint, GameObject targetMap, GameObject enemies)
+    public IEnumerator StartTransition(Collider2D player, AreaNameView area, Transform spawnPoint, GameObject targetMap, GameObject enemies)
     {
         if (inTransition) yield break;
 
