@@ -7,11 +7,7 @@ public class Menu : MonoBehaviour
 	public Canvas panel;
 	private bool pausa;
 
-	// Use this for initialization
-	void Start()
-	{
-		panel.enabled = false;
-	}
+	[SerializeField] private InputHandler inputHandler;
 
 	private void Awake()
 	{
@@ -20,14 +16,27 @@ public class Menu : MonoBehaviour
 			Destroy(gameObject);
 	}
 
-	// Update is called once per frame
-	void Update()
+	void Start()
 	{
-		if (Input.GetKeyDown(KeyCode.Escape))
-		{
-			pausa = !pausa;
-			Time.timeScale = (pausa) ? 0f : 1f;
-			panel.enabled = pausa;
-		}
+		panel.enabled = false;
+	}
+
+	void OnEnable()
+	{
+		inputHandler.PausePressed += HandlePause;
+	}
+
+	void OnDisable()
+	{
+		inputHandler.PausePressed -= HandlePause;
+
+	}
+
+	// Update is called once per frame
+	private void HandlePause()
+	{
+		pausa = !pausa;
+		Time.timeScale = pausa ? 0f : 1f;
+		panel.enabled = pausa;
 	}
 }

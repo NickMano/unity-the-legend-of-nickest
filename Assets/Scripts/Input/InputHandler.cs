@@ -5,22 +5,20 @@ public class InputHandler : MonoBehaviour
 {
     public event Action JumpPressed;
     public event Action AttackPressed;
+    public event Action PausePressed;
 
     void Update()
     {
-        bool isJumping = Input.GetKeyDown(KeyCode.Space);
-        if (isJumping)
-        {
-            JumpPressed?.Invoke();
-        }
-
-        bool isAttacking = Input.GetKeyDown(KeyCode.E);
-        if (isAttacking)
-        {
-            AttackPressed?.Invoke();
-        }
-
+        ReportInputPressed(Input.GetKeyDown(KeyCode.Space), JumpPressed);
+        ReportInputPressed(Input.GetKeyDown(KeyCode.E), AttackPressed);
+        ReportInputPressed(Input.GetKeyDown(KeyCode.Escape), PausePressed);
     }
 
     public float MoveAxis => Input.GetAxis("Horizontal");
+
+    private void ReportInputPressed(bool isPressed, Action action)
+    {
+        if (!isPressed) return;
+        action?.Invoke();
+    }
 }
