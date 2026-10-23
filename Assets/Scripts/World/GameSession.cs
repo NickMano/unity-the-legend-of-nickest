@@ -10,11 +10,11 @@ public class GameSession : MonoBehaviour
     public GameSessionState State { get; private set; }
 
 
-    void StartGame()
-    {
+    // void StartGame()
+    // {
 
-        Camera.main.GetComponent<CamaraFollow>().SetBound(initialMap);
-    }
+    //     Camera.main.GetComponent<CamaraFollow>().SetBound(initialMap);
+    // }
 
     public void StartNewGame()
     {

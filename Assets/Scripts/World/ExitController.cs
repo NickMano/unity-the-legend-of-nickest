@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class ExitControler : MonoBehaviour
+public class ExitController : MonoBehaviour
 {
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private AreaCoordinator coordinator;
