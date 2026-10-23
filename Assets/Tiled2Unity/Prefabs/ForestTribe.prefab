@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4090138227854634}
   m_Layer: 0
-  m_Name: CortablesCol
+  m_Name: Interactables
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -431,7 +431,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4158414233174856}
   m_Layer: 0
-  m_Name: PuertasCol
+  m_Name: Doors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1311,11 +1311,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30fad7024e6745188c62f837b2817fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 0}
-  targetMap: {fileID: 1901449369748988}
-  EnemigosPreb: {fileID: 0}
+  spawnPoint: {fileID: 4017737521296548}
   coordinator: {fileID: 0}
   area: {fileID: 0}
+  targetArea: {fileID: 3662604242180756305}
 --- !u!1 &1245510239485942
 GameObject:
   m_ObjectHideFlags: 0
@@ -4924,10 +4923,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 0}
-  targetMap: {fileID: 0}
-  EnemigosPreb: {fileID: 0}
   coordinator: {fileID: 0}
   area: {fileID: 0}
+  targetArea: {fileID: 0}
 --- !u!1 &1642462768555420
 GameObject:
   m_ObjectHideFlags: 0
@@ -7048,7 +7046,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4234830583885730}
   m_Layer: 0
-  m_Name: SalidasCol
+  m_Name: Exits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7328,6 +7326,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4198238708836628}
+  - component: {fileID: 3662604242180756305}
   m_Layer: 0
   m_Name: ForestTribe
   m_TagString: Untagged
@@ -7354,6 +7353,23 @@ Transform:
   - {fileID: 7109161539464664609}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3662604242180756305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901449369748988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a68defac9f41da4fb10c7c7133e2b73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AreaContext
+  areaId: forestTribe
+  displayName: Tribu del bosque
+  defaultSpawnPoint: {fileID: 4682247793617378}
+  enemiesPrefab: {fileID: 0}
+  map: {fileID: 3839415613057898047}
 --- !u!1 &1928227703394516
 GameObject:
   m_ObjectHideFlags: 0
