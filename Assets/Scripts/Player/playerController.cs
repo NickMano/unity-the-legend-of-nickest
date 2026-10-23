@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private Vector2 knockbackImpulse = new(5f, 6f);
 
-	[SerializeField] private GameObject camara;
 	[SerializeField] private InputHandler inputHandler;
 
 	private PlayerCombat combat;
@@ -25,8 +24,6 @@ public class PlayerController : MonoBehaviour
 	private Animator animator;
 
 	public Vector3 posIni;
-
-	public GameObject initialEnemyPreb;
 
 	public int jumpDamage { get; private set; } = 1;
 
@@ -70,8 +67,6 @@ public class PlayerController : MonoBehaviour
 
 	void Start()
 	{
-		if (initialEnemyPreb) Instantiate(initialEnemyPreb);
-		// Go to checkpoint if fall 
 		posIni = transform.position;
 	}
 

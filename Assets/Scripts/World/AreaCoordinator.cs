@@ -7,32 +7,36 @@ public class AreaCoordinator : MonoBehaviour
 
     [SerializeField] private ScreenFader screenFader;
     [SerializeField] private CamaraFollow camera;
+    [SerializeField] private AreaContext initialArea;
 
-    public IEnumerator StartTransition(Collider2D player, AreaNameView area, Transform spawnPoint, GameObject targetMap, GameObject enemies)
+    public AreaContext CurrentArea { get; private set; }
+
+    void Start()
+    {
+        PrepareArea(initialArea);
+    }
+
+    public IEnumerator StartTransition(PlayerController player, AreaNameView area, Transform spawnPoint, AreaContext targetMap)
     {
         if (inTransition) yield break;
-
-        var playerController = player.GetComponent<PlayerController>();
-        if (playerController == null) yield break;
 
         try
         {
             inTransition = true;
 
-            playerController.SetTransitionLocked(true);
+            player.SetTransitionLocked(true);
             yield return screenFader.FadeToBlack();
 
-            yield return area.FadeOut(targetMap.name);
+            yield return area.FadeOut(targetMap.DisplayName);
 
-            ChangePositionAndCheckPoint(playerController, spawnPoint.position);
-            camera.SetBound(targetMap);
-            UpdateEnemies(enemies);
+            ChangePositionAndCheckPoint(player, spawnPoint.position);
+            PrepareArea(targetMap);
 
             yield return screenFader.FadeToClear();
         }
         finally
         {
-            playerController.SetTransitionLocked(false);
+            player.SetTransitionLocked(false);
             inTransition = false;
         }
 
@@ -42,6 +46,13 @@ public class AreaCoordinator : MonoBehaviour
     {
         player.SpawnTo(position);
         player.SetPosIni(position);
+    }
+
+    public void PrepareArea(AreaContext area)
+    {
+        camera.SetBound(area.Map);
+        UpdateEnemies(area.EnemiesPrefab);
+        CurrentArea = area;
     }
 
     private void UpdateEnemies(GameObject enemies)
