@@ -3,26 +3,19 @@ using System.Collections;
 
 public class AreaCoordinator : MonoBehaviour
 {
-    private bool inTransition = false;
-
+    [SerializeField] private GameSession session;
     [SerializeField] private ScreenFader screenFader;
     [SerializeField] private CamaraFollow camera;
-    [SerializeField] private AreaContext initialArea;
 
     public AreaContext CurrentArea { get; private set; }
 
-    void Start()
-    {
-        PrepareArea(initialArea);
-    }
-
     public IEnumerator StartTransition(PlayerController player, AreaNameView area, Transform spawnPoint, AreaContext targetMap)
     {
-        if (inTransition) yield break;
+        if (session.State != GameSessionState.Playing) yield break;
 
         try
         {
-            inTransition = true;
+            session.StartTransition();
 
             player.SetTransitionLocked(true);
             yield return screenFader.FadeToBlack();
@@ -37,7 +30,7 @@ public class AreaCoordinator : MonoBehaviour
         finally
         {
             player.SetTransitionLocked(false);
-            inTransition = false;
+            session.EndTransition();
         }
 
     }
@@ -62,7 +55,6 @@ public class AreaCoordinator : MonoBehaviour
             foreach (GameObject obj in objects)
                 Destroy(obj);
 
-        //Genero los enemigos del nuevo mapa
         if (enemies) Instantiate(enemies);
     }
 }

@@ -201,6 +201,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!223 &687790052 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 223066891265757516, guid: 5a753ed79e1fa4da4a5da67cbb8b9208, type: 3}
+  m_PrefabInstance: {fileID: 8424824006435971100}
+  m_PrefabAsset: {fileID: 0}
 --- !u!850595691 &726241444
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -320,9 +325,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b6133abbd04a24f85830a67b6701fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AreaTransitionController
+  session: {fileID: 2124295178}
   screenFader: {fileID: 149979866}
   camera: {fileID: 1995887512}
-  initialArea: {fileID: 1065234132}
 --- !u!114 &802988245 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5635561642210296253, guid: 5a753ed79e1fa4da4a5da67cbb8b9208, type: 3}
@@ -536,6 +541,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2124295177}
   - {fileID: 775448525}
   - {fileID: 1858668225}
   m_Father: {fileID: 0}
@@ -801,6 +807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc009d0091cee84f80720e91087f4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputHandler
+  session: {fileID: 2124295178}
 --- !u!1 &1863066324
 GameObject:
   m_ObjectHideFlags: 0
@@ -959,6 +966,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2124295176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2124295177}
+  - component: {fileID: 2124295178}
+  m_Layer: 0
+  m_Name: GameSession
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2124295177
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124295176}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 64.485, y: 4.6175, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1505839041}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2124295178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124295176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 131855585b61e42409e0b7258af2617f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameSession
+  areaCoordinator: {fileID: 775448526}
+  camera: {fileID: 1995887512}
+  initialArea: {fileID: 1065234132}
 --- !u!1001 &1611579021134066944
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1064,6 +1118,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 114417575338665910, guid: 5a753ed79e1fa4da4a5da67cbb8b9208, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 687790052}
+    - target: {fileID: 114417575338665910, guid: 5a753ed79e1fa4da4a5da67cbb8b9208, type: 3}
+      propertyPath: session
+      value: 
+      objectReference: {fileID: 2124295178}
+    - target: {fileID: 114417575338665910, guid: 5a753ed79e1fa4da4a5da67cbb8b9208, type: 3}
+      propertyPath: canvasPause
+      value: 
+      objectReference: {fileID: 687790052}
     - target: {fileID: 114417575338665910, guid: 5a753ed79e1fa4da4a5da67cbb8b9208, type: 3}
       propertyPath: inputHandler
       value: 

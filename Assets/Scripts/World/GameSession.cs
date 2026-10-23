@@ -1,34 +1,47 @@
 using System;
-using UnityEditor;
 using UnityEngine;
 
 public class GameSession : MonoBehaviour
 {
-    [SerializeField] private GameObject initialMap;
+    [SerializeField] private AreaCoordinator areaCoordinator;
     [SerializeField] private CamaraFollow camera;
+    [SerializeField] private AreaContext initialArea;
 
+    public event Action<GameSessionState> StateChanged;
     public GameSessionState State { get; private set; }
 
+    void Start()
+    {
+        StartGame();
+    }
 
-    // void StartGame()
-    // {
-
-    //     Camera.main.GetComponent<CamaraFollow>().SetBound(initialMap);
-    // }
+    void StartGame()
+    {
+        areaCoordinator.PrepareArea(initialArea);
+        State = GameSessionState.Playing;
+    }
 
     public void StartNewGame()
     {
+        if (State != GameSessionState.Playing) return;
         State = GameSessionState.Playing;
     }
     public void RequestPause()
     {
         if (State != GameSessionState.Playing) return;
+
+        Time.timeScale = 0f;
         State = GameSessionState.Paused;
+        StateChanged?.Invoke(State);
     }
+
     public void RequestResume()
     {
         if (State != GameSessionState.Paused) return;
+
+        Time.timeScale = 1f;
         State = GameSessionState.Playing;
+        StateChanged?.Invoke(State);
     }
 
     public void RequestRespawn()
@@ -40,5 +53,19 @@ public class GameSession : MonoBehaviour
     {
         if (State != GameSessionState.Playing) return;
         State = GameSessionState.GameOver;
+    }
+
+    public void StartTransition()
+    {
+        if (State != GameSessionState.Playing) return;
+        State = GameSessionState.Transitioning;
+        StateChanged?.Invoke(State);
+    }
+
+    public void EndTransition()
+    {
+        if (State != GameSessionState.Transitioning) return;
+        State = GameSessionState.Playing;
+        StateChanged?.Invoke(State);
     }
 }

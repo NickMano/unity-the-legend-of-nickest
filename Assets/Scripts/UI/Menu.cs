@@ -4,10 +4,10 @@ public class Menu : MonoBehaviour
 {
 	public static Menu instancia = null;
 
-	public Canvas panel;
-	private bool pausa;
+	[SerializeField] private Canvas canvasPause;
 
 	[SerializeField] private InputHandler inputHandler;
+	[SerializeField] private GameSession session;
 
 	private void Awake()
 	{
@@ -18,25 +18,35 @@ public class Menu : MonoBehaviour
 
 	void Start()
 	{
-		panel.enabled = false;
+		HandleStateChanged(session.State);
 	}
 
 	void OnEnable()
 	{
 		inputHandler.PausePressed += HandlePause;
+		session.StateChanged += HandleStateChanged;
 	}
 
 	void OnDisable()
 	{
 		inputHandler.PausePressed -= HandlePause;
-
+		session.StateChanged -= HandleStateChanged;
 	}
 
-	// Update is called once per frame
 	private void HandlePause()
 	{
-		pausa = !pausa;
-		Time.timeScale = pausa ? 0f : 1f;
-		panel.enabled = pausa;
+		if (session.State == GameSessionState.Playing)
+		{
+			session.RequestPause();
+			return;
+		}
+
+		if (session.State == GameSessionState.Paused)
+			session.RequestResume();
+	}
+
+	private void HandleStateChanged(GameSessionState state)
+	{
+		canvasPause.enabled = state == GameSessionState.Paused;
 	}
 }
