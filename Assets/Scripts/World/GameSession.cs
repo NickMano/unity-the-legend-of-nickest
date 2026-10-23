@@ -1,14 +1,26 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameSession : MonoBehaviour
 {
     [SerializeField] private AreaCoordinator areaCoordinator;
     [SerializeField] private CamaraFollow camera;
     [SerializeField] private AreaContext initialArea;
+    [SerializeField] private Health playerHealth;
 
     public event Action<GameSessionState> StateChanged;
     public GameSessionState State { get; private set; }
+
+    private void OnEnable()
+    {
+        playerHealth.Died += EndGame;
+    }
+
+    private void OnDisable()
+    {
+        playerHealth.Died -= EndGame;
+    }
 
     void Start()
     {
@@ -51,8 +63,11 @@ public class GameSession : MonoBehaviour
     }
     public void EndGame()
     {
-        if (State != GameSessionState.Playing) return;
+        if (State == GameSessionState.GameOver) return;
+
         State = GameSessionState.GameOver;
+        Time.timeScale = 0f;
+        StateChanged?.Invoke(State);
     }
 
     public void StartTransition()
@@ -67,5 +82,17 @@ public class GameSession : MonoBehaviour
         if (State != GameSessionState.Transitioning) return;
         State = GameSessionState.Playing;
         StateChanged?.Invoke(State);
+    }
+
+    public void GoToMainMenu()
+    {
+        Debug.Log($"GoToMainMenu ejecutado. Estado: {State}");
+        if (State != GameSessionState.GameOver && State != GameSessionState.Paused) return;
+
+        if (PlayerController.instancia != null)
+            Destroy(PlayerController.instancia.gameObject);
+
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MenuPrincipal");
     }
 }
